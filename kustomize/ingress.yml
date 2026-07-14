@@ -1,0 +1,23 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webserver-ingress
+  namespace: default
+spec:
+  tls:
+    - hosts:
+        - webserver.local
+      secretName: local-selfsigned-tls
+
+  rules:
+  - host: webserver.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: webserver-service
+            port:
+              number: 80
